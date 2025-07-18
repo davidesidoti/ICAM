@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Sincronizzazione on-demand" icon-name="custom:custom9">
+        
+        <div class="slds-align_absolute-center">
+            <lightning-button variant="brand" label="Invia a Sage X3" title="Invia a Sage X3" onclick={handleStartSync} class="slds-m-left_x-small" disabled={syncStarted}></lightning-button>
+        </div>
+        <div class="slds-align_absolute-center">
+            <template if:true={syncStarted}>
+                <h2>Richiesta effettuata, attendere per la risposta...</h2>    
+            </template>
+        </div>
+    </lightning-card>
+</template>

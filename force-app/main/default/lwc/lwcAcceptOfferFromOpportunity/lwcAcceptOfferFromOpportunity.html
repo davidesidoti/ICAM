@@ -1,0 +1,93 @@
+<template>
+    <template if:true={showLWC}>
+        <lightning-card title="Accept offer from opportunity" icon-name="custom:custom9">
+            <div class="slds-align_absolute-center">
+                <lightning-button 
+                    variant="brand" 
+                    label="Accept Offer" 
+                    title="Accept Offer" 
+                    onclick={handleStartOfferAcceptance} 
+                    class="slds-m-left_x-small" 
+                    disabled={isLoading}>
+                </lightning-button>
+            </div>
+            <div class="slds-align_absolute-center slds-p-top_small">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Processing..." size="small"></lightning-spinner>
+                    <p class="slds-p-left_medium">Processing request...</p>
+                </template>
+            </div>
+        </lightning-card>
+        
+        <!-- Modal for Prospect Account Details -->
+        <template if:true={showProspectModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleModalCancel}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Complete Account Information</h2>
+                        <p class="slds-m-top_x-small">
+                            This account is currently a Prospect. Please complete the required information below to proceed.
+                        </p>
+                    </header>
+                    
+                    <!-- Modal Body -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-record-edit-form
+                            object-api-name="Account"
+                            record-id={accountData.Id}
+                            onsubmit={handleModalSubmit}>
+                            
+                            <!-- Display required account fields -->
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                    <lightning-input-field field-name="Name"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                    <lightning-input-field field-name="IntraCommunityVAT__c" required></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                    <lightning-input-field field-name="PayTerm__c" required></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                    <lightning-input-field field-name="VACBPartner__c" required></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                    <lightning-input-field field-name="PaymentBank__c" required></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-p-bottom_small">
+                                    <lightning-input-field field-name="ISICDivision__c" required></lightning-input-field>
+                                    <lightning-input-field field-name="ISICClass__c" required></lightning-input-field>
+                                </div>
+                                <!-- <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                                </div> -->
+                            </div>
+                            
+                            <div class="slds-align_absolute-center slds-m-top_medium">
+                                <lightning-button 
+                                    variant="neutral" 
+                                    label="Cancel" 
+                                    title="Cancel" 
+                                    onclick={handleModalCancel} 
+                                    class="slds-m-right_small">
+                                </lightning-button>
+                                <lightning-button 
+                                    variant="brand" 
+                                    label="Save and Continue" 
+                                    title="Save and Continue" 
+                                    type="submit" 
+                                    class="slds-m-left_small">
+                                </lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </template>
+</template>
