@@ -6,6 +6,7 @@ public without sharing class SDG_ReST_Contatto implements Queueable, Database.Al
 
     //costruttore per chained queueable
     public SDG_ReST_Contatto(List<Contact> records, Opportunity opp, Boolean isChainable){
+        System.debug('SDG_ReST_Contatto');
         this.contacts = records;
         this.opp = opp;
         this.isChainable = isChainable;
@@ -13,7 +14,7 @@ public without sharing class SDG_ReST_Contatto implements Queueable, Database.Al
 
     //execute Queueable
     public void execute(QueueableContext context) {
-
+        System.debug('Contatto Execute Queueable');
         Map<Id, Contact> contactToUpdate = new Map<Id, Contact>();
         Id recTypeService = SDG_ReST_Utils.getRecordType('Service', 'Opportunity');
         List<SDG_ReST_CustomEmail> customEmailList = new List<SDG_ReST_CustomEmail>();
@@ -23,6 +24,8 @@ public without sharing class SDG_ReST_Contatto implements Queueable, Database.Al
         //carica la lista delle email attive per le notifiche email in to, cc e bcc
         Map<String, List<String>> addressList = SDG_ReST_Utils.getAddessesList();
 
+        System.debug('SDG_ReST_Contatto: contacts is null?: ' + contacts == null);
+        System.debug('SDG_ReST_Contatto: contacts: ' + contacts);
         //se sono stati inviati dei Contact
         if(contacts != null){
 

@@ -54,16 +54,18 @@ public without sharing class SDG_ReST_Contatto_Request{
         contatto.CTY = cnt.MailingCity?.toUpperCase();
         contatto.SAT = cnt.MailingState?.toUpperCase();
 		contatto.YREG = cnt.Region__c;
-	/* 		
-		contatto.RELAZIONI = new List<SDG_ReST_Relazioni>();
-		SDG_ReST_Relazioni rel = new SDG_ReST_Relazioni();
-		rel.BPANUM = SDG_ReST_Utils.getExtId(cnt.Account_ExternalId__c, '_');
-		rel.BPATYP = '1';
-		rel.CNTFNC = cnt.Role__c;
-		rel.CNTMSS = cnt.Mission__c;
-		rel.CNTSRV = cnt.Service__c;
-		contatto.RELAZIONI.add(rel); 
-	*/
+		
+		if (cnt.Account_ExternalId__c != null) {
+			contatto.RELAZIONI = new List<SDG_ReST_Relazioni>();
+			SDG_ReST_Relazioni rel = new SDG_ReST_Relazioni();
+			rel.BPANUM = SDG_ReST_Utils.getExtId(cnt.Account_ExternalId__c, '_');
+			rel.BPATYP = '1';
+			rel.CNTFNC = cnt.Role__c;
+			rel.CNTMSS = cnt.Mission__c;
+			rel.CNTSRV = cnt.Service__c;
+			contatto.RELAZIONI.add(rel); 
+			System.debug('CONTATTO RELAZIONI: ' + contatto.RELAZIONI);
+		}
 
 		return (prettyPrint ? System.JSON.serializePretty(contatto, true) : System.JSON.serialize(contatto, true));
     }

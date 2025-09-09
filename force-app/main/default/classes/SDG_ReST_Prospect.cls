@@ -314,6 +314,11 @@ public without sharing class SDG_ReST_Prospect implements Queueable, Database.Al
             if(contactToUpdate.size() > 0){
                 System.debug('Contacts to update: ' + contactToUpdate);
                 SDG_ReST_Utils.updateNoTrigger(contactToUpdate.values(), 'SDG_ReST_Contatto_Handler');
+                Formula.recalculateFormulas(contactToUpdate.values());
+                System.debug('Formule dei contatti ricalcolate.');
+                if (!Test.isRunningTest()) {
+                    System.enqueueJob(new SDG_ReST_Contatto(contactToUpdate.values()));
+                }
             }
 
             //ramo chained queueable
