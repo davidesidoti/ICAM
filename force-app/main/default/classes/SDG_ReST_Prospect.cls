@@ -317,7 +317,7 @@ public without sharing class SDG_ReST_Prospect implements Queueable, Database.Al
                 Formula.recalculateFormulas(contactToUpdate.values());
                 System.debug('Formule dei contatti ricalcolate.');
                 if (!Test.isRunningTest()) {
-                    System.enqueueJob(new SDG_ReST_Contatto(contactToUpdate.values()));
+                    System.enqueueJob(new SDG_ReST_Contatto(contactToUpdate.values(), opp, true));
                 }
             }
 
